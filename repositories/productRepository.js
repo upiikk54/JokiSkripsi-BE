@@ -11,7 +11,6 @@ class productRepository {
     product_price,
     product_stock,
     expired_date,
-    status_expired,
   }) {
     const createProduct = products.create({
       user_id,
@@ -20,7 +19,6 @@ class productRepository {
       product_price,
       product_stock,
       expired_date,
-      status_expired,
     });
 
     return createProduct;

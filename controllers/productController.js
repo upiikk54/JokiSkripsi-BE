@@ -10,7 +10,6 @@ const createProduct = async (req, res) => {
   } = req.body;
 
   const user_id = req.user.id;
-  const status_expired = false;
 
   const { status, statusCode, message, data } =
     await productService.createProduct({
@@ -20,7 +19,6 @@ const createProduct = async (req, res) => {
       product_price,
       product_stock,
       expired_date,
-      status_expired,
     });
 
   res.status(statusCode).send({

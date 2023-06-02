@@ -8,7 +8,6 @@ class transactionService {
     product_price,
     product_stock,
     expired_date,
-    status_expired,
   }) {
     try {
       if (!product_code) {
@@ -73,7 +72,6 @@ class transactionService {
         product_price,
         product_stock,
         expired_date,
-        status_expired,
       });
 
       return {
@@ -177,7 +175,7 @@ class transactionService {
         statusCode: 500,
         message: err.message,
         data: {
-          filtered_income: null,
+          get_under_kadaluwarsa: null,
         },
       };
     }
@@ -222,7 +220,7 @@ class transactionService {
         statusCode: 500,
         message: err.message,
         data: {
-          filtered_income: null,
+          get_after_kadaluwarsa: null,
         },
       };
     }
