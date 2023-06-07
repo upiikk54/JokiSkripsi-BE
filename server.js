@@ -16,6 +16,9 @@ app.use(cors());
 // ------------------- Import Controller ------------------- //
 const authController = require("./controllers/authController");
 const productController = require("./controllers/productController");
+const brandController = require("./controllers/brandController");
+const unitController = require("./controllers/unitController");
+const categoryController = require("./controllers/categoryController");
 // ------------------- End Import Controller ------------------- //
 
 // ------------------- Import Controller ------------------- //
@@ -27,6 +30,30 @@ app.post("/v1/auth/register", authController.handleRegister);
 app.post("/v1/auth/login", authController.handleLogin);
 app.get("/v1/auth/me", middlewares.authenticate, authController.currentUser);
 // ------------------- End Define Routes Auth ------------------- //
+
+// ------------------- Define Routes Brand ------------------- //
+app.post("/v1/brand/create", middlewares.authenticate, brandController.handleCreateBrand);
+app.put("/v1/brand/update/:id", middlewares.authenticate, brandController.handleUpdateBrand);
+app.delete("/v1/brand/delete/:id", middlewares.authenticate, brandController.handleDeleteBrand);
+app.get("/v1/brand", brandController.handleGetAllBrand);
+app.get("/v1/brand/:id", middlewares.authenticate, brandController.handleGetBrandById);
+// ------------------- End Define Routes Brand ------------------- //
+
+// ------------------- Define Routes Units ------------------- //
+app.post("/v1/unit/create", middlewares.authenticate, unitController.handleCreateUnit);
+app.put("/v1/unit/update/:id", middlewares.authenticate, unitController.handleUpdateUnit);
+app.delete("/v1/unit/delete/:id", middlewares.authenticate, unitController.handleDeleteUnit);
+app.get("/v1/unit", unitController.handleGetAllUnit);
+app.get("/v1/unit/:id", middlewares.authenticate, unitController.handleGetUnitById);
+// ------------------- End Define Routes Units ------------------- //
+
+// ------------------- Define Routes Units ------------------- //
+app.post("/v1/category/create", middlewares.authenticate, categoryController.handleCreateCategory);
+app.put("/v1/category/update/:id", middlewares.authenticate, categoryController.handleUpdateCategory);
+app.delete("/v1/category/delete/:id", middlewares.authenticate, categoryController.handleDeletecategory);
+app.get("/v1/category", categoryController.handleGetAllCategory);
+app.get("/v1/category/:id", middlewares.authenticate, categoryController.handleGetCategoryById);
+// ------------------- End Define Routes Units ------------------- //
 
 // ------------------- Define Routes Product ------------------- //
 app.post(
@@ -59,6 +86,7 @@ app.delete(
   middlewares.authenticate,
   productController.deleteProductById
 );
+// ------------------- Define Routes Product ------------------- //
 
 // ------------------- Listen Server ------------------- //
 app.listen(process.env.PORT || PORT, () => {
