@@ -116,55 +116,66 @@ class purchaseService {
     amount,
     purchasePrice,
   }) {
-    const getPurchaseById = await purchaseRepository.getPurchaseById({
-      id,
-    });
-
-    if (getPurchaseById.userId == userId) {
-      if (!productId) {
-        productId = getPurchaseById.productId;
-      }
-
-      if (!supplierId) {
-        supplierId = getPurchaseById.supplierId;
-      }
-
-      if (!transactionDate) {
-        transactionDate = getPurchaseById.transactionDate;
-      }
-
-      if (!amount) {
-        amount = getPurchaseById.amount;
-      }
-
-      if (!purchasePrice) {
-        purchasePrice = getPurchaseById.purchasePrice;
-      }
-
-      const updatePurchaseById = await purchaseRepository.updatePurchaseById({
+    try {
+      const getPurchaseById = await purchaseRepository.getPurchaseById({
         id,
-        productId,
-        supplierId,
-        transactionDate,
-        amount,
-        purchasePrice,
       });
 
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Pembelian berhasil diperbarui.",
-        data: {
-          updatePurchaseById: updatePurchaseById,
-        },
-      };
-    } else {
+      if (getPurchaseById.userId == userId) {
+        if (!productId) {
+          productId = getPurchaseById.productId;
+        }
+
+        if (!supplierId) {
+          supplierId = getPurchaseById.supplierId;
+        }
+
+        if (!transactionDate) {
+          transactionDate = getPurchaseById.transactionDate;
+        }
+
+        if (!amount) {
+          amount = getPurchaseById.amount;
+        }
+
+        if (!purchasePrice) {
+          purchasePrice = getPurchaseById.purchasePrice;
+        }
+
+        const updatePurchaseById = await purchaseRepository.updatePurchaseById({
+          id,
+          productId,
+          supplierId,
+          transactionDate,
+          amount,
+          purchasePrice,
+        });
+
+        return {
+          status: true,
+          statusCode: 200,
+          message: "Pembelian berhasil diperbarui.",
+          data: {
+            updatePurchaseById: updatePurchaseById,
+          },
+        };
+      } else {
+        return {
+          status: false,
+          statusCode: 401,
+          message: "Sumber tidak ada.",
+          data: {
+            updatePurchaseById: null,
+          },
+        };
+      }
+    } catch (err) {
       return {
         status: false,
         statusCode: 401,
-        message: "Sumber tidak ada.",
+        message: err.message,
         data: {
-          updatePurchaseById: null,
+          updatedSupplier: null,
         },
       };
     }
@@ -219,30 +230,41 @@ class purchaseService {
   }
 
   static async deletePurchaseById({ id, userId }) {
-    const getPurchaseById = await purchaseRepository.getPurchaseById({
-      id,
-    });
-
-    if (getPurchaseById.userId == userId) {
-      const deletePurchaseById = await purchaseRepository.deletePurchaseById({
+    try {
+      const getPurchaseById = await purchaseRepository.getPurchaseById({
         id,
       });
 
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Pembelian berhasil dihapus.",
-        data: {
-          deletePurchaseById: deletePurchaseById,
-        },
-      };
-    } else {
+      if (getPurchaseById.userId == userId) {
+        const deletePurchaseById = await purchaseRepository.deletePurchaseById({
+          id,
+        });
+
+        return {
+          status: true,
+          statusCode: 200,
+          message: "Pembelian berhasil dihapus.",
+          data: {
+            deletePurchaseById: deletePurchaseById,
+          },
+        };
+      } else {
+        return {
+          status: false,
+          statusCode: 401,
+          message: "Sumber tidak ada.",
+          data: {
+            deletePurchaseById: null,
+          },
+        };
+      }
+    } catch (err) {
       return {
         status: false,
         statusCode: 401,
-        message: "Sumber tidak ada.",
+        message: err.message,
         data: {
-          deletePurchaseById: null,
+          deleteSupplier: null,
         },
       };
     }

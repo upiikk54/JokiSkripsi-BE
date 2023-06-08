@@ -89,57 +89,58 @@ class salesTransactionService {
     transactionDate,
     amount,
   }) {
-    const getSalesTransactionById =
-      await salesTransactionRepository.getSalesTransactionById({
-        id,
-      });
-
-    if (!getSalesTransactionById) {
-      return {
-        status: false,
-        statusCode: 400,
-        message: "Sumber tidak ada.",
-        data: {
-          updateSalesTransactionById: null,
-        },
-      };
-    }
-    if (getSalesTransactionById.userId == userId) {
-      if (!productId) {
-        productId = getSalesTransactionById.productId;
-      }
-
-      if (!transactionDate) {
-        transactionDate = getSalesTransactionById.transactionDate;
-      }
-
-      if (!amount) {
-        amount = getSalesTransactionById.amount;
-      }
-
-      const updateSalesTransactionById =
-        await salesTransactionRepository.updateSalesTransactionById({
+    try {
+      const getSalesTransactionById =
+        await salesTransactionRepository.getSalesTransactionById({
           id,
-          productId,
-          transactionDate,
-          amount,
         });
 
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Sales transaction berhasil diperbarui.",
-        data: {
-          updateSalesTransactionById: updateSalesTransactionById,
-        },
-      };
-    } else {
+      if (getSalesTransactionById.userId == userId) {
+        if (!productId) {
+          productId = getSalesTransactionById.productId;
+        }
+
+        if (!transactionDate) {
+          transactionDate = getSalesTransactionById.transactionDate;
+        }
+
+        if (!amount) {
+          amount = getSalesTransactionById.amount;
+        }
+
+        const updateSalesTransactionById =
+          await salesTransactionRepository.updateSalesTransactionById({
+            id,
+            productId,
+            transactionDate,
+            amount,
+          });
+
+        return {
+          status: true,
+          statusCode: 200,
+          message: "Sales transaction berhasil diperbarui.",
+          data: {
+            updateSalesTransactionById: updateSalesTransactionById,
+          },
+        };
+      } else {
+        return {
+          status: false,
+          statusCode: 401,
+          message: "Sumber tidak ada.",
+          data: {
+            updateSalesTransactionById: null,
+          },
+        };
+      }
+    } catch (err) {
       return {
         status: false,
         statusCode: 401,
-        message: "Sumber tidak ada.",
+        message: err.message,
         data: {
-          updateSalesTransactionById: null,
+          updatedSupplier: null,
         },
       };
     }
@@ -196,43 +197,43 @@ class salesTransactionService {
   }
 
   static async deleteSalesTransactionById({ id, userId }) {
-    const getSalesTransactionById =
-      await salesTransactionRepository.getSalesTransactionById({
-        id,
-      });
-
-    if (!getSalesTransactionById) {
-      return {
-        status: false,
-        statusCode: 400,
-        message: "Sumber tidak ada.",
-        data: {
-          updateSalesTransactionById: null,
-        },
-      };
-    }
-
-    if (getSalesTransactionById.userId == userId) {
-      const deleteSalesTransactionById =
-        await salesTransactionRepository.deleteSalesTransactionById({
+    try {
+      const getSalesTransactionById =
+        await salesTransactionRepository.getSalesTransactionById({
           id,
         });
 
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Sales transaction berhasil dihapus.",
-        data: {
-          deleteSalesTransactionById: deleteSalesTransactionById,
-        },
-      };
-    } else {
+      if (getSalesTransactionById.userId == userId) {
+        const deleteSalesTransactionById =
+          await salesTransactionRepository.deleteSalesTransactionById({
+            id,
+          });
+
+        return {
+          status: true,
+          statusCode: 200,
+          message: "Sales transaction berhasil dihapus.",
+          data: {
+            deleteSalesTransactionById: deleteSalesTransactionById,
+          },
+        };
+      } else {
+        return {
+          status: false,
+          statusCode: 401,
+          message: "Sumber tidak ada.",
+          data: {
+            deleteSalesTransactionById: null,
+          },
+        };
+      }
+    } catch (err) {
       return {
         status: false,
         statusCode: 401,
-        message: "Sumber tidak ada.",
+        message: err.message,
         data: {
-          deleteSalesTransactionById: null,
+          updatedSupplier: null,
         },
       };
     }

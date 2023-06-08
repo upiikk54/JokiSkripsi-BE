@@ -131,65 +131,76 @@ class productService {
     productStock,
     expiredDate,
   }) {
-    const getProductById = await productRepository.getProductById({
-      id,
-    });
-
-    if (getProductById.userId == userId) {
-      if (!categoryId) {
-        categoryId = getProductById.categoryId;
-      }
-
-      if (!brandId) {
-        brandId = getProductById.brandId;
-      }
-
-      if (!unitId) {
-        unitId = getProductById.unitId;
-      }
-
-      if (!productName) {
-        productName = getProductById.productName;
-      }
-
-      if (!productPrice) {
-        productPrice = getProductById.productPrice;
-      }
-
-      if (!productStock) {
-        productStock = getProductById.productStock;
-      }
-
-      if (!expiredDate) {
-        expiredDate = getProductById.expiredDate;
-      }
-
-      const updateProductById = await productRepository.updateProductById({
+    try {
+      const getProductById = await productRepository.getProductById({
         id,
-        categoryId,
-        brandId,
-        unitId,
-        productName,
-        productPrice,
-        productStock,
-        expiredDate,
       });
 
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Product berhasil diperbarui.",
-        data: {
-          updateProductById: updateProductById,
-        },
-      };
-    } else {
+      if (getProductById.userId == userId) {
+        if (!categoryId) {
+          categoryId = getProductById.categoryId;
+        }
+
+        if (!brandId) {
+          brandId = getProductById.brandId;
+        }
+
+        if (!unitId) {
+          unitId = getProductById.unitId;
+        }
+
+        if (!productName) {
+          productName = getProductById.productName;
+        }
+
+        if (!productPrice) {
+          productPrice = getProductById.productPrice;
+        }
+
+        if (!productStock) {
+          productStock = getProductById.productStock;
+        }
+
+        if (!expiredDate) {
+          expiredDate = getProductById.expiredDate;
+        }
+
+        const updateProductById = await productRepository.updateProductById({
+          id,
+          categoryId,
+          brandId,
+          unitId,
+          productName,
+          productPrice,
+          productStock,
+          expiredDate,
+        });
+
+        return {
+          status: true,
+          statusCode: 200,
+          message: "Product berhasil diperbarui.",
+          data: {
+            updateProductById: updateProductById,
+          },
+        };
+      } else {
+        return {
+          status: false,
+          statusCode: 401,
+          message: "Sumber tidak ada.",
+          data: {
+            updateProductById: null,
+          },
+        };
+      }
+    } catch (err) {
       return {
         status: false,
         statusCode: 401,
-        message: "Sumber tidak ada.",
+        message: err.message,
         data: {
-          updateProductById: null,
+          updatedSupplier: null,
         },
       };
     }
@@ -266,30 +277,41 @@ class productService {
   }
 
   static async deleteProductById({ id, userId }) {
-    const getProductById = await productRepository.getProductById({
-      id,
-    });
-
-    if (getProductById.userId == userId) {
-      const deleteProductById = await productRepository.deleteProductById({
+    try {
+      const getProductById = await productRepository.getProductById({
         id,
       });
 
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Produk berhasil dihapus.",
-        data: {
-          deleteProductById: deleteProductById,
-        },
-      };
-    } else {
+      if (getProductById.userId == userId) {
+        const deleteProductById = await productRepository.deleteProductById({
+          id,
+        });
+
+        return {
+          status: true,
+          statusCode: 200,
+          message: "Produk berhasil dihapus.",
+          data: {
+            deleteProductById: deleteProductById,
+          },
+        };
+      } else {
+        return {
+          status: false,
+          statusCode: 401,
+          message: "Sumber tidak ada.",
+          data: {
+            deleteProductById: null,
+          },
+        };
+      }
+    } catch (err) {
       return {
         status: false,
         statusCode: 401,
-        message: "Sumber tidak ada.",
+        message: err.message,
         data: {
-          deleteProductById: null,
+          deleteSupplier: null,
         },
       };
     }
