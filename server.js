@@ -21,6 +21,7 @@ const unitController = require("./controllers/unitController");
 const categoryController = require("./controllers/categoryController");
 const supplierController = require("./controllers/supplierController");
 const purchaseController = require("./controllers/purchaseController");
+const salesTransactionController = require("./controllers/salesTransactionController");
 // ------------------- End Import Controller ------------------- //
 
 // ------------------- Import Controller ------------------- //
@@ -183,6 +184,33 @@ app.delete(
   "/v1/delete-purchase/:id",
   middlewares.authenticate,
   purchaseController.deletePurchaseById
+);
+// ------------------- Define Routes Product ------------------- //
+
+// ------------------- Define Routes Product ------------------- //
+app.get(
+  "/v1/sales-transaction",
+  salesTransactionController.getAllSalesTransaction
+);
+app.get(
+  "/v1/sales-transaction/:id",
+  middlewares.authenticate,
+  salesTransactionController.getSalesTransactionById
+);
+app.post(
+  "/v1/sales-transaction",
+  middlewares.authenticate,
+  salesTransactionController.createSalesTransaction
+);
+app.put(
+  "/v1/sales-transaction/:id",
+  middlewares.authenticate,
+  salesTransactionController.updateSalesTransactionById
+);
+app.delete(
+  "/v1/sales-transaction/:id",
+  middlewares.authenticate,
+  salesTransactionController.deleteSalesTransactionById
 );
 // ------------------- Define Routes Product ------------------- //
 
