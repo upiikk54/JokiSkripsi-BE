@@ -1,6 +1,6 @@
 const productRepository = require("../repositories/productRepository");
 
-class transactionService {
+class productService {
   static async createProduct({
     userId,
     categoryId,
@@ -218,12 +218,10 @@ class transactionService {
     }
   }
 
-  static async getProductById({
-    id
-  }) {
+  static async getProductById({ id }) {
     try {
       const getProductById = await productRepository.getProductById({
-        id
+        id,
       });
 
       return {
@@ -267,10 +265,7 @@ class transactionService {
     }
   }
 
-  static async deleteProductById({
-    id,
-    userId
-  }) {
+  static async deleteProductById({ id, userId }) {
     const getProductById = await productRepository.getProductById({
       id,
     });
@@ -301,4 +296,4 @@ class transactionService {
   }
 }
 
-module.exports = transactionService;
+module.exports = productService;
