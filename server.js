@@ -19,6 +19,7 @@ const productController = require("./controllers/productController");
 const brandController = require("./controllers/brandController");
 const unitController = require("./controllers/unitController");
 const categoryController = require("./controllers/categoryController");
+const supplierController = require("./controllers/supplierController");
 // ------------------- End Import Controller ------------------- //
 
 // ------------------- Import Controller ------------------- //
@@ -63,6 +64,13 @@ app.get("/v1/product/:id", middlewares.authenticate, productController.getProduc
 app.put("/v1/update-product/:id", middlewares.authenticate, productController.updateProductById);
 app.delete("/v1/delete-product/:id", middlewares.authenticate, productController.deleteProductById);
 // ------------------- Define Routes Product ------------------- //
+
+// ------------------- Define Routes Product ------------------- //
+app.get("/v1/supplier", supplierController.handleGetAllSupplier)
+app.get("/v1/supplier/:id", middlewares.authenticate, supplierController.handleGetSupplierById)
+app.post("/v1/supplier", middlewares.authenticate, supplierController.handleCreateSupplier)
+app.put("/v1/update-supplier/:id", middlewares.authenticate, supplierController.handleUpdateSupplier)
+app.delete("/v1/delete-supplier/:id", middlewares.authenticate, supplierController.handleDeleteSupplier)
 
 // ------------------- Listen Server ------------------- //
 app.listen(process.env.PORT || PORT, () => {
