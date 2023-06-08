@@ -2,24 +2,33 @@ const productService = require("../services/productService");
 
 const createProduct = async (req, res) => {
   const {
-    product_code,
-    product_name,
-    product_price,
-    product_stock,
-    expired_date,
+    categoryId,
+    brandId,
+    unitId,
+    productName,
+    productPrice,
+    productStock,
+    expiredDate,
   } = req.body;
 
-  const user_id = req.user.id;
+  const userId = req.user.id;
 
-  const { status, statusCode, message, data } =
-    await productService.createProduct({
-      user_id,
-      product_code,
-      product_name,
-      product_price,
-      product_stock,
-      expired_date,
-    });
+  const {
+    status,
+    statusCode,
+    message,
+    data
+  } =
+  await productService.createProduct({
+    userId,
+    categoryId,
+    brandId,
+    unitId,
+    productName,
+    productPrice,
+    productStock,
+    expiredDate,
+  });
 
   res.status(statusCode).send({
     status: status,
@@ -29,27 +38,38 @@ const createProduct = async (req, res) => {
 };
 
 const updateProductById = async (req, res, next) => {
-  const { id } = req.params;
   const {
-    product_code,
-    product_name,
-    product_price,
-    product_stock,
-    expired_date,
+    id
+  } = req.params;
+  const {
+    categoryId,
+    brandId,
+    unitId,
+    productName,
+    productPrice,
+    productStock,
+    expiredDate,
   } = req.body;
 
-  const user_id = req.user.id;
+  const userId = req.user.id;
 
-  const { status, statusCode, message, data } =
-    await productService.updateProductById({
-      id,
-      user_id,
-      product_code,
-      product_name,
-      product_price,
-      product_stock,
-      expired_date,
-    });
+  const {
+    status,
+    statusCode,
+    message,
+    data
+  } =
+  await productService.updateProductById({
+    id,
+    userId,
+    categoryId,
+    brandId,
+    unitId,
+    productName,
+    productPrice,
+    productStock,
+    expiredDate,
+  });
 
   res.status(statusCode).send({
     status: status,
@@ -59,9 +79,18 @@ const updateProductById = async (req, res, next) => {
 };
 
 const getProductById = async (req, res, next) => {
-  const { id } = req.params;
-  const { status, statusCode, message, data } =
-    await productService.getProductById({ id });
+  const {
+    id
+  } = req.params;
+  const {
+    status,
+    statusCode,
+    message,
+    data
+  } =
+  await productService.getProductById({
+    id
+  });
 
   res.status(statusCode).send({
     status: status,
@@ -71,8 +100,13 @@ const getProductById = async (req, res, next) => {
 };
 
 const getAllUnderKadaluwarsa = async (req, res, next) => {
-  const { status, statusCode, message, data } =
-    await productService.getAllProductUnderKadaluwarsa();
+  const {
+    status,
+    statusCode,
+    message,
+    data
+  } =
+  await productService.getAllProductUnderKadaluwarsa();
 
   res.status(statusCode).send({
     status: status,
@@ -82,8 +116,13 @@ const getAllUnderKadaluwarsa = async (req, res, next) => {
 };
 
 const getAllAfterKadaluwarsa = async (req, res, next) => {
-  const { status, statusCode, message, data } =
-    await productService.getAllProductAfterKadaluwarsa();
+  const {
+    status,
+    statusCode,
+    message,
+    data
+  } =
+  await productService.getAllProductAfterKadaluwarsa();
 
   res.status(statusCode).send({
     status: status,
@@ -93,15 +132,22 @@ const getAllAfterKadaluwarsa = async (req, res, next) => {
 };
 
 const deleteProductById = async (req, res, next) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
 
-  const user_id = req.user.id;
+  const userId = req.user.id;
 
-  const { status, statusCode, message, data } =
-    await productService.deleteProductById({
-      id,
-      user_id,
-    });
+  const {
+    status,
+    statusCode,
+    message,
+    data
+  } =
+  await productService.deleteProductById({
+    id,
+    userId,
+  });
 
   res.status(statusCode).send({
     status: status,
