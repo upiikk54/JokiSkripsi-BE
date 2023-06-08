@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       units.belongsTo(models.users, {
         foreignKey: 'userId'
       });
+      units.hasMany(models.products);
     }
   }
   units.init({
