@@ -2,84 +2,110 @@ const productRepository = require("../repositories/productRepository");
 
 class transactionService {
   static async createProduct({
-    user_id,
-    product_code,
-    product_name,
-    product_price,
-    product_stock,
-    expired_date,
+    userId,
+    categoryId,
+    brandId,
+    unitId,
+    productName,
+    productPrice,
+    productStock,
+    expiredDate,
   }) {
     try {
-      if (!product_code) {
+      if (!categoryId) {
         return {
           status: false,
           statusCode: 400,
-          message: "Kode produk pemasukan harus diisi.",
+          message: "Kategori produk harus diisi.",
           data: {
-            created_product: null,
+            createdProduct: null,
           },
         };
       }
 
-      if (!product_name) {
+      if (!brandId) {
         return {
           status: false,
           statusCode: 400,
-          message: "Nama produk pemasukan harus diisi.",
+          message: "Merk produk harus diisi.",
           data: {
-            created_product: null,
+            createdProduct: null,
           },
         };
       }
 
-      if (!product_price) {
+      if (!unitId) {
         return {
           status: false,
           statusCode: 400,
-          message: "Harga produk pemasukan harus diisi.",
+          message: "Satuan produk harus diisi.",
           data: {
-            created_product: null,
+            createdProduct: null,
           },
         };
       }
 
-      if (!product_stock) {
+      if (!productName) {
         return {
           status: false,
           statusCode: 400,
-          message: "Stok produk harus diisi.",
+          message: "Nama produk harus diisi.",
           data: {
-            created_product: null,
+            createdProduct: null,
           },
         };
       }
 
-      if (!expired_date) {
+      if (!productPrice) {
         return {
           status: false,
           statusCode: 400,
-          message: "Tanggal kadaluwarsa harus diisi.",
+          message: "Harga produk harus diisi.",
           data: {
-            created_product: null,
+            createdProduct: null,
+          },
+        };
+      }
+
+      if (!productStock) {
+        return {
+          status: false,
+          statusCode: 400,
+          message: "Harga produk harus diisi.",
+          data: {
+            createdProduct: null,
+          },
+        };
+      }
+
+      if (!expiredDate) {
+        return {
+          status: false,
+          statusCode: 400,
+          message: "Harga produk harus diisi.",
+          data: {
+            createdProduct: null,
           },
         };
       }
 
       const createProduct = await productRepository.createProduct({
-        user_id,
-        product_code,
-        product_name,
-        product_price,
-        product_stock,
-        expired_date,
+        userId,
+        categoryId,
+        brandId,
+        unitId,
+        productName,
+        productPrice,
+        productStock,
+        expiredDate,
       });
 
       return {
         status: true,
         statusCode: 201,
-        message: "Berhasil membuat pemasukan.",
+        message: "Berhasil membuat produk.",
         data: {
-          created_product: createProduct,
+          createdProduct: createProduct,
         },
       };
     } catch (err) {
@@ -88,7 +114,7 @@ class transactionService {
         statusCode: 401,
         message: "Sumber tidak ada.",
         data: {
-          created_product: null,
+          createdProduct: null,
         },
       };
     }
@@ -96,52 +122,63 @@ class transactionService {
 
   static async updateProductById({
     id,
-    user_id,
-    product_code,
-    product_name,
-    product_price,
-    product_stock,
-    expired_date,
+    userId,
+    categoryId,
+    brandId,
+    unitId,
+    productName,
+    productPrice,
+    productStock,
+    expiredDate,
   }) {
     const getProductById = await productRepository.getProductById({
       id,
     });
-    // console.log(getProductById);
 
-    if (getProductById.user_id == user_id) {
-      if (!product_code) {
-        product_code = getProductById.product_code;
+    if (getProductById.userId == userId) {
+      if (!categoryId) {
+        categoryId = getProductById.categoryId;
       }
 
-      if (!product_name) {
-        product_name = getProductById.product_name;
+      if (!brandId) {
+        brandId = getProductById.brandId;
       }
 
-      if (!product_price) {
-        product_price = getProductById.product_price;
+      if (!unitId) {
+        unitId = getProductById.unitId;
       }
 
-      if (!product_stock) {
-        product_stock = getProductById.product_stock;
+      if (!productName) {
+        productName = getProductById.productName;
       }
 
-      if (!expired_date) {
-        expired_date = getProduct.expired_date;
+      if (!productPrice) {
+        productPrice = getProductById.productPrice;
+      }
+
+      if (!productStock) {
+        productStock = getProductById.productStock;
+      }
+
+      if (!expiredDate) {
+        expiredDate = getProductById.expiredDate;
       }
 
       const updateProductById = await productRepository.updateProductById({
         id,
-        product_code,
-        product_name,
-        product_price,
-        product_stock,
-        expired_date,
+        categoryId,
+        brandId,
+        unitId,
+        productName,
+        productPrice,
+        productStock,
+        expiredDate,
       });
 
       return {
         status: true,
         statusCode: 200,
-        message: "Pengeluaran berhasil diperbarui.",
+        message: "Product berhasil diperbarui.",
         data: {
           updateProductById: updateProductById,
         },
@@ -181,9 +218,13 @@ class transactionService {
     }
   }
 
-  static async getProductById({ id }) {
+  static async getProductById({
+    id
+  }) {
     try {
-      const getProductById = await productRepository.getProductById({ id });
+      const getProductById = await productRepository.getProductById({
+        id
+      });
 
       return {
         status: true,
@@ -226,12 +267,15 @@ class transactionService {
     }
   }
 
-  static async deleteProductById({ id, user_id }) {
+  static async deleteProductById({
+    id,
+    userId
+  }) {
     const getProductById = await productRepository.getProductById({
       id,
     });
 
-    if (getProductById.user_id == user_id) {
+    if (getProductById.userId == userId) {
       const deleteProductById = await productRepository.deleteProductById({
         id,
       });

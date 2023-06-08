@@ -47,45 +47,21 @@ app.get("/v1/unit", unitController.handleGetAllUnit);
 app.get("/v1/unit/:id", middlewares.authenticate, unitController.handleGetUnitById);
 // ------------------- End Define Routes Units ------------------- //
 
-// ------------------- Define Routes Units ------------------- //
+// ------------------- Define Routes Category ------------------- //
 app.post("/v1/category/create", middlewares.authenticate, categoryController.handleCreateCategory);
 app.put("/v1/category/update/:id", middlewares.authenticate, categoryController.handleUpdateCategory);
 app.delete("/v1/category/delete/:id", middlewares.authenticate, categoryController.handleDeletecategory);
 app.get("/v1/category", categoryController.handleGetAllCategory);
 app.get("/v1/category/:id", middlewares.authenticate, categoryController.handleGetCategoryById);
-// ------------------- End Define Routes Units ------------------- //
+// ------------------- End Define Routes Category ------------------- //
 
 // ------------------- Define Routes Product ------------------- //
-app.post(
-  "/v1/create-product",
-  middlewares.authenticate,
-  productController.createProduct
-);
-app.get(
-  "/v1/get-under-kadaluwarsa",
-  middlewares.authenticate,
-  productController.getAllUnderKadaluwarsa
-);
-app.get(
-  "/v1/get-after-kadaluwarsa",
-  middlewares.authenticate,
-  productController.getAllAfterKadaluwarsa
-);
-app.get(
-  "/v1/product/:id",
-  middlewares.authenticate,
-  productController.getProductById
-);
-app.put(
-  "/v1/update-product/:id",
-  middlewares.authenticate,
-  productController.updateProductById
-);
-app.delete(
-  "/v1/delete-product/:id",
-  middlewares.authenticate,
-  productController.deleteProductById
-);
+app.post("/v1/create-product", middlewares.authenticate, productController.createProduct);
+app.get("/v1/get-under-kadaluwarsa", middlewares.authenticate, productController.getAllUnderKadaluwarsa);
+app.get("/v1/get-after-kadaluwarsa", middlewares.authenticate, productController.getAllAfterKadaluwarsa);
+app.get("/v1/product/:id", middlewares.authenticate, productController.getProductById);
+app.put("/v1/update-product/:id", middlewares.authenticate, productController.updateProductById);
+app.delete("/v1/delete-product/:id", middlewares.authenticate, productController.deleteProductById);
 // ------------------- Define Routes Product ------------------- //
 
 // ------------------- Listen Server ------------------- //
