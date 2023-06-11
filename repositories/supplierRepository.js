@@ -1,5 +1,6 @@
 const {
-    suppliers
+    suppliers,
+    users
 } = require("../models")
 
 class supplierRepository {
@@ -58,6 +59,10 @@ class supplierRepository {
         const getSupplierById = await suppliers.findOne({
             where: {
                 id
+            },
+            include: {
+                model: users,
+                attributes: ['email','role']
             }
         });
 
@@ -65,7 +70,12 @@ class supplierRepository {
     };
 
     static async handleGetAllSupplier() {
-        const getAllSupplier = await suppliers.findAll();
+        const getAllSupplier = await suppliers.findAll({
+            include: {
+                model: users,
+                attributes: ['email','role']
+            }
+        });
 
         return getAllSupplier;
     };

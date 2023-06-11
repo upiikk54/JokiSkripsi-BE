@@ -1,5 +1,6 @@
 const {
-    categorys
+    categorys,
+    users
 } = require("../models")
 
 class categoryRepository {
@@ -46,14 +47,23 @@ class categoryRepository {
         const getCategoryById = await categorys.findOne({
             where: {
                 id
-            }
+            },
+            include: [{
+                model: users,
+                attributes: ['email','role']
+            }]
         });
 
         return getCategoryById;
     };
 
     static async handleGetAllCategory() {
-        const getAllCategory = await categorys.findAll();
+        const getAllCategory = await categorys.findAll({
+            include: [{
+                model: users,
+                attributes: ['email','role']
+            }]
+        });
 
         return getAllCategory;
     };

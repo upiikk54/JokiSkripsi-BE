@@ -1,5 +1,6 @@
 const {
-    units
+    units,
+    users
 } = require("../models")
 
 class brandRepository {
@@ -46,6 +47,10 @@ class brandRepository {
         const getUnitById = await units.findOne({
             where: {
                 id
+            },
+            include: {
+                model: users,
+                attributes: ['email','role']
             }
         });
 
@@ -53,7 +58,12 @@ class brandRepository {
     };
 
     static async handleGetAllUnit() {
-        const getAllUnit = await units.findAll();
+        const getAllUnit = await units.findAll({
+            include: {
+                model: users,
+                attributes: ['email','role']
+            }
+        });
 
         return getAllUnit;
     };

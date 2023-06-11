@@ -1,5 +1,6 @@
 const {
-    brands
+    brands,
+    users
 } = require("../models")
 
 class brandRepository {
@@ -46,14 +47,23 @@ class brandRepository {
         const getBrandById = await brands.findOne({
             where: {
                 id
-            }
+            },
+            include: [{
+                model: users,
+                attributes: ['email','role']
+            }]
         });
 
         return getBrandById;
     };
 
     static async handleGetAllBrand() {
-        const handleGetAllBrand = await brands.findAll();
+        const handleGetAllBrand = await brands.findAll({
+            include: [{
+                model: users,
+                attributes: ['email','role']
+            }]
+        });
 
         return handleGetAllBrand;
     };

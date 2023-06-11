@@ -1,6 +1,6 @@
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
-const { purchases } = require("../models");
+const { purchases, users, products, suppliers } = require("../models");
 
 class purchaseRepository {
   // ------------------------- Create Product ------------------------- //
@@ -57,12 +57,37 @@ class purchaseRepository {
       where: {
         id,
       },
+      include: [{
+        model: users,
+        attributes: ['email','role']},
+        {
+          model: products,
+          attributes: ['productName','productPrice','productStock','expiredDate']
+        },
+        {
+          model: suppliers,
+          attributes: ['supplierName','contact','address','description']
+        }
+      ]
     });
     return getById;
   }
 
   static async getAllPurchase() {
-    const getAllPurchase = await purchases.findAll();
+    const getAllPurchase = await purchases.findAll({
+      include: [{
+        model: users,
+        attributes: ['email','role']},
+        {
+          model: products,
+          attributes: ['productName','productPrice','productStock','expiredDate']
+        },
+        {
+          model: suppliers,
+          attributes: ['supplierName','contact','address','description']
+        }
+      ]
+    });
 
     return getAllPurchase;
   }

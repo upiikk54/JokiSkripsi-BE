@@ -4,7 +4,10 @@ const {
 } = require("sequelize");
 const {
   products,
-  users
+  users,
+  categorys,
+  brands,
+  units
 } = require("../models");
 
 class productRepository {
@@ -67,6 +70,22 @@ class productRepository {
       where: {
         id
       },
+      include: [{
+        model: users,
+        attributes: ['email','role']},
+        {
+          model: categorys,
+          attributes: ['categoryName']
+        },
+        {
+          model: brands,
+          attributes: ['brandName']
+        },
+        {
+          model: units,
+          attributes: ['unitName']
+        }
+      ],
     });
     return getById;
   }
@@ -80,6 +99,22 @@ class productRepository {
           [Op.gte]: now,
         },
       },
+      include: [{
+        model: users,
+        attributes: ['email','role']},
+        {
+          model: categorys,
+          attributes: ['categoryName']
+        },
+        {
+          model: brands,
+          attributes: ['brandName']
+        },
+        {
+          model: units,
+          attributes: ['unitName']
+        }
+      ],
       order: [
         ["expiredDate", "ASC"]
       ],
@@ -97,6 +132,22 @@ class productRepository {
           [Op.lte]: now,
         },
       },
+      include: [{
+        model: users,
+        attributes: ['email','role']},
+        {
+          model: categorys,
+          attributes: ['categoryName']
+        },
+        {
+          model: brands,
+          attributes: ['brandName']
+        },
+        {
+          model: units,
+          attributes: ['unitName']
+        }
+      ],
       order: [
         ["expiredDate", "DESC"]
       ],

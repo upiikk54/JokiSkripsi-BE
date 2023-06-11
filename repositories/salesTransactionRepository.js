@@ -1,4 +1,4 @@
-const { salesTransactions } = require("../models");
+const { salesTransactions, users, products } = require("../models");
 
 class salesTransactionRepository {
   // ------------------------- Create Product ------------------------- //
@@ -47,12 +47,29 @@ class salesTransactionRepository {
       where: {
         id,
       },
+      include: [{
+        model: users,
+        attributes: ['email','role']},
+        {
+          model: products,
+          attributes: ['productName','productPrice','productStock','expiredDate']
+        }
+      ]
     });
     return getById;
   }
 
   static async getAllSalesTransaction() {
-    const getAllSalesTransaction = await salesTransactions.findAll();
+    const getAllSalesTransaction = await salesTransactions.findAll({
+      include: [{
+        model: users,
+        attributes: ['email','role']},
+        {
+          model: products,
+          attributes: ['productName','productPrice','productStock','expiredDate']
+        }
+      ]
+    });
 
     return getAllSalesTransaction;
   }
