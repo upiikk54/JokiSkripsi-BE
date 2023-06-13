@@ -12,6 +12,8 @@ class purchaseRepository {
     amount,
     purchasePrice,
     transactionCode,
+    id,
+    productStock
   }) {
     const createPurchase = purchases.create({
       userId,
@@ -21,6 +23,13 @@ class purchaseRepository {
       amount,
       purchasePrice,
       transactionCode,
+    });
+    await products.update({      
+      productStock,      
+    }, {
+      where: {
+        id,
+      },
     });
 
     return createPurchase;
@@ -69,6 +78,30 @@ class purchaseRepository {
           attributes: ['supplierName','contact','address','description']
         }
       ]
+    });
+    return getById;
+  }
+
+  static async getAmountById({ productId }) {
+    const getById = await purchases.findOne({
+      where: {
+        productId,
+      },
+      include: [{
+        model: users,
+        attributes: ['email','role']},
+        {
+          model: products,
+          attributes: ['productName','productPrice','productStock','expiredDate']
+        },
+        {
+          model: suppliers,
+          attributes: ['supplierName','contact','address','description']
+        }
+      ],
+      order: [
+        ["id", "DESC"]
+      ],
     });
     return getById;
   }
