@@ -50,7 +50,7 @@ app.delete(
   middlewares.authenticate,
   brandController.handleDeleteBrand
 );
-app.get("/v1/brand", brandController.handleGetAllBrand);
+app.get("/v1/brand", middlewares.authenticate, brandController.handleGetAllBrand);
 app.get(
   "/v1/brand/:id",
   middlewares.authenticate,
@@ -74,7 +74,7 @@ app.delete(
   middlewares.authenticate,
   unitController.handleDeleteUnit
 );
-app.get("/v1/unit", unitController.handleGetAllUnit);
+app.get("/v1/unit", middlewares.authenticate, unitController.handleGetAllUnit);
 app.get(
   "/v1/unit/:id",
   middlewares.authenticate,
@@ -98,7 +98,7 @@ app.delete(
   middlewares.authenticate,
   categoryController.handleDeletecategory
 );
-app.get("/v1/category", categoryController.handleGetAllCategory);
+app.get("/v1/category", middlewares.authenticate, categoryController.handleGetAllCategory);
 app.get(
   "/v1/category/:id",
   middlewares.authenticate,
@@ -140,14 +140,16 @@ app.delete(
 // ------------------- Define Routes Product ------------------- //
 
 // ------------------- Define Routes Product ------------------- //
-app.get("/v1/supplier", supplierController.handleGetAllSupplier);
+app.get("/v1/supplier",
+  middlewares.authenticate,
+  supplierController.handleGetAllSupplier);
 app.get(
   "/v1/supplier/:id",
   middlewares.authenticate,
   supplierController.handleGetSupplierById
 );
 app.post(
-  "/v1/supplier",
+  "/v1/supplier-create",
   middlewares.authenticate,
   supplierController.handleCreateSupplier
 );
@@ -164,14 +166,16 @@ app.delete(
 // ------------------- Define Routes Product ------------------- //
 
 // ------------------- Define Routes Product ------------------- //
-app.get("/v1/purchase", purchaseController.getAllPurchase);
+app.get("/v1/purchase",
+  middlewares.authenticate,
+  purchaseController.getAllPurchase);
 app.get(
   "/v1/purchase/:id",
   middlewares.authenticate,
   purchaseController.getPurchaseById
 );
 app.post(
-  "/v1/purchase",
+  "/v1/purchase-create",
   middlewares.authenticate,
   purchaseController.createPurchase
 );
@@ -190,6 +194,7 @@ app.delete(
 // ------------------- Define Routes Product ------------------- //
 app.get(
   "/v1/sales-transaction",
+  middlewares.authenticate,
   salesTransactionController.getAllSalesTransaction
 );
 app.get(
@@ -198,7 +203,7 @@ app.get(
   salesTransactionController.getSalesTransactionById
 );
 app.post(
-  "/v1/sales-transaction",
+  "/v1/sales-transaction/create",
   middlewares.authenticate,
   salesTransactionController.createSalesTransaction
 );
@@ -208,7 +213,7 @@ app.put(
   salesTransactionController.updateSalesTransactionById
 );
 app.delete(
-  "/v1/sales-transaction/:id",
+  "/v1/sales-transaction/delete/:id",
   middlewares.authenticate,
   salesTransactionController.deleteSalesTransactionById
 );

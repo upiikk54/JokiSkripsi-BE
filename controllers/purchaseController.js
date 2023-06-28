@@ -5,7 +5,7 @@ const createPurchase = async (req, res) => {
   const { productId, supplierId, transactionDate, amount, purchasePrice } =
     req.body;
 
-  const transactionCode = "TP" + Math.floor(Math.random() * (100 - 1 + 1)) + 1;
+  const transactionCode = "TP" + Math.floor(Math.random() * (1000 - 10 + 10)) + 10;
   const userId = req.user.id;
   const getProductById = await productRepository.getProductById({
     id: productId,
