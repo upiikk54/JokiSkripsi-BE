@@ -174,6 +174,11 @@ app.get(
   middlewares.authenticate,
   purchaseController.getPurchaseById
 );
+app.get(
+  "/v1/purchase-laporan",
+  middlewares.authenticate,
+  purchaseController.getPurchaseLaporan
+);
 app.post(
   "/v1/purchase-create",
   middlewares.authenticate,
@@ -201,6 +206,11 @@ app.get(
   "/v1/sales-transaction/:id",
   middlewares.authenticate,
   salesTransactionController.getSalesTransactionById
+);
+app.get(
+  "/v1/sales-transaction-laporan",
+  middlewares.authenticate,
+  salesTransactionController.getSalesTransactionLaporan
 );
 app.post(
   "/v1/sales-transaction/create",

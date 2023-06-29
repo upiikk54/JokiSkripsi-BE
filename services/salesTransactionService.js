@@ -171,6 +171,31 @@ class salesTransactionService {
     }
   }
 
+  static async getSalesTransactionLaporan({ month, year }) {
+    try {
+      const getSalesTransactionLaporan = await salesTransactionRepository.getSalesTransactionLaporan({
+        month,
+        year
+      });
+
+      return {
+        status: true,
+        statusCode: 200,
+        message: "data sales transaction berhasil ditampilkan",
+        data: getSalesTransactionLaporan,
+      };
+    } catch (err) {
+      return {
+        status: false,
+        statusCode: 500,
+        message: err.message,
+        data: {
+          get_salesTransaction_laporan: null,
+        },
+      };
+    }
+  }
+
   static async getAllSalesTransaction() {
     try {
       const getAllSalesTransaction =

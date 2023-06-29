@@ -209,6 +209,31 @@ class purchaseService {
     }
   }
 
+  static async getPurchaseLaporan({ month, year }) {
+    try {
+      const getPurchaseLaporan = await purchaseRepository.getPurchaseLaporan({
+        month,
+        year
+      });
+
+      return {
+        status: true,
+        statusCode: 200,
+        message: "data pembelian berhasil ditampilkan",
+        data: getPurchaseLaporan,
+      };
+    } catch (err) {
+      return {
+        status: false,
+        statusCode: 500,
+        message: err.message,
+        data: {
+          get_purchase_laporan: null,
+        },
+      };
+    }
+  }
+
   static async getAllPurchase() {
     try {
       const getAllPurchase = await purchaseRepository.getAllPurchase();

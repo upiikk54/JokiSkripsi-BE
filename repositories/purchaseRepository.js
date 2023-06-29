@@ -116,6 +116,39 @@ class purchaseRepository {
     return getById;
   }
 
+  static async getPurchaseLaporan({
+    month,
+    year
+  }) {                
+    const getById = await purchases.findAll({      
+      where: {
+        createdAt: {
+          [Op.and]: [
+            sequelize.where(sequelize.fn('MONTH', sequelize.col('purchases.createdAt')), month),
+            sequelize.where(sequelize.fn('YEAR', sequelize.col('purchases.createdAt')), year)
+          ]
+        }
+      },
+      include: [{
+          model: users,
+          attributes: ['email', 'role']
+        },
+        {
+          model: products,
+          attributes: ['productName', 'productPrice', 'productStock', 'expiredDate']
+        },
+        {
+          model: suppliers,
+          attributes: ['supplierName', 'contact', 'address', 'description']
+        }
+      ],
+      order: [
+        ["id", "DESC"]
+      ],
+    });
+    return getById;
+  }
+
   static async getAllPurchase() {
     const getAllPurchase = await purchases.findAll({
       include: [{

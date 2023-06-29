@@ -1,5 +1,6 @@
 const purchaseService = require("../services/purchaseService");
 const productRepository = require("../repositories/productRepository");
+const purchaseRepository = require("../repositories/purchaseRepository");
 
 const createPurchase = async (req, res) => {
   const { productId, supplierId, transactionDate, amount, purchasePrice } =
@@ -84,6 +85,21 @@ const getPurchaseById = async (req, res, next) => {
   });
 };
 
+const getPurchaseLaporan = async (req, res, next) => {    
+  const { month, year } = req.query
+  const { status, statusCode, message, data } =
+    await purchaseService.getPurchaseLaporan({
+      month,
+      year
+    });
+
+  res.status(statusCode).send({
+    status: status,
+    message: message,
+    data: data,
+  });
+};
+
 const getAllPurchase = async (req, res) => {
   const { status, statusCode, message, data } =
     await purchaseService.getAllPurchase();
@@ -118,4 +134,5 @@ module.exports = {
   getPurchaseById,
   getAllPurchase,
   deletePurchaseById,
+  getPurchaseLaporan
 };

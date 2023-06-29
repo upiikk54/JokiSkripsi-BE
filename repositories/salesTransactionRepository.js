@@ -1,4 +1,8 @@
 const { salesTransactions, users, products } = require("../models");
+const sequelize = require("sequelize");
+const {
+  Op
+} = require("sequelize");
 
 class salesTransactionRepository {
   // ------------------------- Create Product ------------------------- //
@@ -55,6 +59,34 @@ class salesTransactionRepository {
           attributes: ['productName','productPrice','productStock','expiredDate']
         }
       ]
+    });
+    return getById;
+  }
+
+  static async getSalesTransactionLaporan({
+    month,
+    year
+  }) {                
+    const getById = await salesTransactions.findAll({      
+      where: {
+        createdAt: {
+          [Op.and]: [
+            sequelize.where(sequelize.fn('MONTH', sequelize.col('salestransactions.createdAt')), month),
+            sequelize.where(sequelize.fn('YEAR', sequelize.col('salestransactions.createdAt')), year)
+          ]
+        }
+      },
+      include: [{
+        model: users,
+        attributes: ['email','role']},
+        {
+          model: products,
+          attributes: ['productName','productPrice','productStock','expiredDate']
+        }
+      ],
+      order: [
+        ["id", "DESC"]
+      ],
     });
     return getById;
   }

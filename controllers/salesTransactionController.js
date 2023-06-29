@@ -58,6 +58,21 @@ const getSalesTransactionById = async (req, res, next) => {
   });
 };
 
+const getSalesTransactionLaporan = async (req, res, next) => {    
+  const { month, year } = req.query
+  const { status, statusCode, message, data } =
+    await salesTransactionService.getSalesTransactionLaporan({
+      month,
+      year
+    });
+
+  res.status(statusCode).send({
+    status: status,
+    message: message,
+    data: data,
+  });
+};
+
 const getAllSalesTransaction = async (req, res) => {
   const { status, statusCode, message, data } =
     await salesTransactionService.getAllSalesTransaction();
@@ -93,4 +108,5 @@ module.exports = {
   getSalesTransactionById,
   getAllSalesTransaction,
   deleteSalesTransactionById,
+  getSalesTransactionLaporan
 };
