@@ -3,7 +3,7 @@ const salesTransactionService = require("../services/salesTransactionService");
 const createSalesTransaction = async (req, res) => {
   const { productId, transactionDate, amount } = req.body;
 
-  const transactionCode = "TS" + Math.floor(Math.random() * (100 - 1 + 1)) + 1;
+  const transactionCode = "TS" + Math.floor(Math.random() * (1000 - 10 + 10)) + 10;
   const userId = req.user.id;
 
   const { status, statusCode, message, data } =

@@ -120,12 +120,12 @@ class purchaseRepository {
     month,
     year
   }) {                
-    const getById = await purchases.findAll({      
+    const getReportPurchase = await purchases.findAll({      
       where: {
-        createdAt: {
+        transactionDate: {
           [Op.and]: [
-            sequelize.where(sequelize.fn('MONTH', sequelize.col('purchases.createdAt')), month),
-            sequelize.where(sequelize.fn('YEAR', sequelize.col('purchases.createdAt')), year)
+            sequelize.where(sequelize.fn('MONTH', sequelize.col('purchases.transactionDate')), month),
+            sequelize.where(sequelize.fn('YEAR', sequelize.col('purchases.transactionDate')), year)
           ]
         }
       },
@@ -146,7 +146,7 @@ class purchaseRepository {
         ["id", "DESC"]
       ],
     });
-    return getById;
+    return getReportPurchase;
   }
 
   static async getAllPurchase() {

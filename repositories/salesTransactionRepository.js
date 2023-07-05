@@ -71,8 +71,8 @@ class salesTransactionRepository {
       where: {
         createdAt: {
           [Op.and]: [
-            sequelize.where(sequelize.fn('MONTH', sequelize.col('salestransactions.createdAt')), month),
-            sequelize.where(sequelize.fn('YEAR', sequelize.col('salestransactions.createdAt')), year)
+            sequelize.where(sequelize.fn('MONTH', sequelize.col('salestransactions.transactionDate')), month),
+            sequelize.where(sequelize.fn('YEAR', sequelize.col('salestransactions.transactionDate')), year)
           ]
         }
       },
