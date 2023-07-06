@@ -18,9 +18,7 @@ class purchaseRepository {
     transactionDate,
     amount,
     purchasePrice,
-    transactionCode,
-    id,
-    productStock
+    transactionCode,    
   }) {
     const createPurchase = purchases.create({
       userId,
@@ -30,14 +28,7 @@ class purchaseRepository {
       amount,
       purchasePrice,
       transactionCode,
-    });
-    await products.update({
-      productStock,
-    }, {
-      where: {
-        id,
-      },
-    });
+    });    
 
     return createPurchase;
   }

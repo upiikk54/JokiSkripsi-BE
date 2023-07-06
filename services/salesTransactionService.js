@@ -7,6 +7,9 @@ class salesTransactionService {
     transactionDate,
     amount,
     transactionCode,
+    nameShop,
+    id,
+    productStock
   }) {
     try {
       if (!productId) {
@@ -53,6 +56,17 @@ class salesTransactionService {
         };
       }
 
+      if (!nameShop) {
+        return {
+          status: false,
+          statusCode: 400,
+          message: "Nama toko harus diisi.",
+          data: {
+            createSalesTransaction: null,
+          },
+        };
+      }
+
       const createSalesTransaction =
         await salesTransactionRepository.createSalesTransaction({
           userId,
@@ -60,6 +74,9 @@ class salesTransactionService {
           transactionDate,
           amount,
           transactionCode,
+          nameShop,
+          id,          
+          productStock,
         });
 
       return {

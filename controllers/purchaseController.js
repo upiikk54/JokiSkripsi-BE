@@ -7,34 +7,16 @@ const createPurchase = async (req, res) => {
     req.body;
 
   const transactionCode = "TP" + Math.floor(Math.random() * (1000 - 10 + 10)) + 10;
-  const userId = req.user.id;
-  const getProductById = await productRepository.getProductById({
-    id: productId,
-  });  
-  if (getProductById.productStock == 0) {
-    res.status(401).send({
-      status: false,
-      message: `Stok sudah habis`
-    })
-  } else if (getProductById.productStock < amount) {
-    res.status(401).send({
-      status: false,
-      message: `Jumlah melebihi stok produk. Stok produk tinggal ${getProductById.productStock}`
-    })
-  } else {
-    const productStock = getProductById.productStock - amount; 
-    const { status, statusCode, message, data } =
-      await purchaseService.createPurchase({
-        userId,
-        productId,
-        supplierId,
-        transactionDate,
-        amount,
-        purchasePrice,
-        transactionCode,
-        id: productId,    
-        userId,
-        productStock,
+  const userId = req.user.id;        
+  const { status, statusCode, message, data } =
+    await purchaseService.createPurchase({
+      userId,
+      productId,
+      supplierId,
+      transactionDate,
+      amount,
+      purchasePrice,
+      transactionCode      
       });      
   
     res.status(statusCode).send({
@@ -42,8 +24,6 @@ const createPurchase = async (req, res) => {
       message: message,
       data: data,
     });  
-  }
-
 };
 
 const updatePurchaseById = async (req, res, next) => {

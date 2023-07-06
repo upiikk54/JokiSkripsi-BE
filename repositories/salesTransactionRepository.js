@@ -12,6 +12,9 @@ class salesTransactionRepository {
     transactionDate,
     amount,
     transactionCode,
+    nameShop,
+    id,
+    productStock
   }) {
     const createSalesTransaction = salesTransactions.create({
       userId,
@@ -19,7 +22,15 @@ class salesTransactionRepository {
       transactionDate,
       amount,
       transactionCode,
+      nameShop
     });
+    await products.update({
+      productStock,
+    }, {
+      where: {
+        id,
+      },
+    })
 
     return createSalesTransaction;
   }

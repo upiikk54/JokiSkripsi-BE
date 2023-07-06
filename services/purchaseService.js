@@ -8,9 +8,7 @@ class purchaseService {
     transactionDate,
     amount,
     purchasePrice,
-    transactionCode,
-    id,
-    productStock
+    transactionCode,    
   }) {
     try {
       if (!productId) {
@@ -86,9 +84,7 @@ class purchaseService {
         transactionDate,
         amount,
         purchasePrice,
-        transactionCode,
-        id,          
-        productStock, 
+        transactionCode,        
       });
 
       return {

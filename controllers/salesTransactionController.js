@@ -1,25 +1,44 @@
 const salesTransactionService = require("../services/salesTransactionService");
+const productRepository = require("../repositories/productRepository");
 
 const createSalesTransaction = async (req, res) => {
-  const { productId, transactionDate, amount } = req.body;
+  const { productId, transactionDate, amount, nameShop } = req.body;
 
   const transactionCode = "TS" + Math.floor(Math.random() * (1000 - 10 + 10)) + 10;
   const userId = req.user.id;
-
-  const { status, statusCode, message, data } =
-    await salesTransactionService.createSalesTransaction({
-      userId,
-      productId,
-      transactionDate,
-      amount,
-      transactionCode,
-    });
-
-  res.status(statusCode).send({
-    status: status,
-    message: message,
-    data: data,
+  const getProductById = await productRepository.getProductById({
+    id: productId,
   });
+  if (getProductById.productStock == 0) {
+    res.status(401).send({
+      status: false,
+      message: `Stok sudah habis`
+    })
+  } else if (getProductById.productStock < amount) {
+    res.status(401).send({
+      status: false,
+      message: `Jumlah melebihi stok produk. Stok produk tinggal ${getProductById.productStock}`
+    })
+  } else {
+    const productStock = getProductById.productStock - amount; 
+    const { status, statusCode, message, data } =
+      await salesTransactionService.createSalesTransaction({
+        userId,
+        productId,
+        transactionDate,
+        amount,
+        transactionCode,
+        nameShop,
+        productStock,
+        id: productId
+      });
+  
+    res.status(statusCode).send({
+      status: status,
+      message: message,
+      data: data,
+    });
+  }
 };
 
 const updateSalesTransactionById = async (req, res, next) => {
